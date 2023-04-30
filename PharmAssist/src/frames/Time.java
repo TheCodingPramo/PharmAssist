@@ -44,11 +44,11 @@ public class Time extends Thread{
     //get greeting
     public static String getGreeting(){
         if(localhour<11){
-            return "Good Morning!";
+            return "Good Morning:)";
         }else if(localhour<15){
-            return "Good Afternoon!";
+            return "Good Afternoon:)";
         }else{
-            return "Good Evening!";
+            return "Good Evening:)";
         }
     }
     

@@ -1,9 +1,17 @@
 package frames;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.IOException;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.ResultSet;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
+import org.netbeans.lib.awtextra.AbsoluteConstraints;
+import org.netbeans.lib.awtextra.AbsoluteLayout;
 /**
  *
  * @author Pramod Pinimal
@@ -11,11 +19,10 @@ import javax.swing.*;
 */
 public class WcScreen extends javax.swing.JFrame {
 
-    Dimension scrnSize = Toolkit.getDefaultToolkit().getScreenSize();
-    
-    public WcScreen() throws IOException, InterruptedException {
+    public WcScreen() throws IOException, InterruptedException, SQLException {
         initComponents();
         customize();
+        connt=new DbmsConn();
     }
     
     public final void customize() throws InterruptedException{
@@ -31,6 +38,7 @@ public class WcScreen extends javax.swing.JFrame {
         
         //greet
         greet.setText(Time.getGreeting());
+        
     }
 
     public JLabel getLocalTime() {
@@ -41,6 +49,11 @@ public class WcScreen extends javax.swing.JFrame {
         return greet;
     }
 
+    private void loginForm(){
+        JPanel loginform= new JPanel(null);
+        
+        mainPanel.add(loginform);
+    }
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -80,20 +93,21 @@ public class WcScreen extends javax.swing.JFrame {
         });
         mainPanel.add(closeBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(1330, 0, 40, 30));
 
-        greet.setFont(new java.awt.Font("Kozuka Gothic Pr6N EL", 1, 70)); // NOI18N
-        greet.setForeground(new java.awt.Color(19, 158, 13));
+        greet.setFont(new java.awt.Font("Kozuka Gothic Pr6N EL", 1, 33)); // NOI18N
+        greet.setForeground(new java.awt.Color(228, 240, 220));
         greet.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        greet.setText("Good Morning!");
-        mainPanel.add(greet, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 130, 570, 130));
+        greet.setText("Good Evening:)");
+        mainPanel.add(greet, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 330, 110));
 
         localTime.setFont(new java.awt.Font("Kozuka Gothic Pr6N EL", 1, 50)); // NOI18N
         localTime.setForeground(new java.awt.Color(255, 255, 255));
         localTime.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         localTime.setText("00:00:00");
-        mainPanel.add(localTime, new org.netbeans.lib.awtextra.AbsoluteConstraints(1130, 700, 230, 90));
+        mainPanel.add(localTime, new org.netbeans.lib.awtextra.AbsoluteConstraints(1140, 700, 230, 90));
 
         loginBtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         loginBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Graphics/login-mouse out.png"))); // NOI18N
+        loginBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         loginBtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 loginBtnMouseClicked(evt);
@@ -105,9 +119,9 @@ public class WcScreen extends javax.swing.JFrame {
                 loginBtnMouseExited(evt);
             }
         });
-        mainPanel.add(loginBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(1240, 60, -1, 50));
+        mainPanel.add(loginBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(1240, 60, 110, 50));
 
-        bgImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Graphics/welcome_screen2.jpg"))); // NOI18N
+        bgImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Graphics/welcome screen3.jpg"))); // NOI18N
         mainPanel.add(bgImage, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -133,7 +147,7 @@ public class WcScreen extends javax.swing.JFrame {
         closeBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
         tempClr=closeBtn.getBackground();
         closeBtn.setOpaque(true);
-        closeBtn.setBackground(new Color(19, 180, 13));
+        closeBtn.setBackground(new Color(19, 100, 13));
     }//GEN-LAST:event_closeBtnMouseEntered
 
     private void closeBtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_closeBtnMouseExited
@@ -151,9 +165,148 @@ public class WcScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_loginBtnMouseExited
 
     private void loginBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginBtnMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_loginBtnMouseClicked
+        //hide login btn
+        loginBtn.setVisible(false);
+        bgImage.setEnabled(false);
+        bgImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Graphics/welcome screen3-disabled.jpg")));
+        
+        //loginbg- login screen background
+        loginBg=new JLabel();
+        loginBg.setIcon(new ImageIcon(getClass().getResource("/Graphics/login form.png")));
+        loginBg.setText(null);
+        
+        //login panel
+        loginPanel=new JPanel(new AbsoluteLayout());
+        loginPanel.setBackground(null);
+        mainPanel.add(loginPanel, new AbsoluteConstraints(1020,50,320,375));
+        mainPanel.setComponentZOrder(loginPanel, 0);
+        loginPanel.add(loginBg, new AbsoluteConstraints(0, 0,320,375));
 
+        //closeGreen- login form close button
+        closeGreen=new JLabel(new ImageIcon(getClass().getResource("/Graphics/Close_green.png")));
+        loginPanel.add(closeGreen, new AbsoluteConstraints(295, 0,25,25));
+        loginPanel.setComponentZOrder(closeGreen, 0);
+        closeGreen.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        closeGreen.addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseClicked(MouseEvent evt){
+                bgImage.setEnabled(true);
+                bgImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Graphics/welcome screen3.jpg")));
+                loginPanel.setEnabled(false);
+                loginPanel.setVisible(false);
+                loginBtn.setVisible(true);
+            }
+        });
+        
+        //login2Btn -login button of login form
+        login2Btn= new JLabel(new ImageIcon(getClass().getResource("/Graphics/login-out.png")));
+        loginPanel.add(login2Btn, new AbsoluteConstraints(170, 180,74,29));
+        loginPanel.setComponentZOrder(login2Btn, 0);
+        login2Btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        login2Btn.addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseClicked(MouseEvent evt){
+                try {
+                    loginSubmit();
+                } catch (SQLException ex) {
+                    Logger.getLogger(WcScreen.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            
+            @Override
+            public void mouseEntered(MouseEvent evt){
+                login2Btn.setIcon(new ImageIcon(getClass().getResource("/Graphics/login-in.png")));
+            }
+            
+            @Override
+            public void mouseExited(MouseEvent evt){
+                login2Btn.setIcon(new ImageIcon(getClass().getResource("/Graphics/login-out.png")));
+                
+            }
+        });
+        
+        //reset2Btn-reset button of login form
+        reset2Btn= new JLabel(new ImageIcon(getClass().getResource("/Graphics/reset-out.png")));
+        loginPanel.add(reset2Btn, new AbsoluteConstraints(77, 180,74,29));
+        loginPanel.setComponentZOrder(reset2Btn, 0);
+        reset2Btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        reset2Btn.addMouseListener(new MouseAdapter(){
+            
+            @Override
+            public void mouseEntered(MouseEvent evt){
+                reset2Btn.setIcon(new ImageIcon(getClass().getResource("/Graphics/reset-in.png")));
+            }
+            
+            @Override
+            public void mouseClicked(MouseEvent evt){
+                uname.setText(null);
+                pwd.setText(null);
+            }
+            
+            @Override
+            public void mouseExited(MouseEvent evt){
+                reset2Btn.setIcon(new ImageIcon(getClass().getResource("/Graphics/reset-out.png")));
+            }
+        });
+        
+        //uname-user name text field
+        uname=new JTextField();
+        loginPanel.add(uname, new AbsoluteConstraints(115, 85, 164, 28));
+        loginPanel.setComponentZOrder(uname, 0);
+        uname.setBorder(null);
+        uname.setBackground(null);
+        uname.setHorizontalAlignment(JTextField.CENTER);
+        uname.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 15));
+        uname.setForeground(new Color(30,50,30));
+        
+        //pwd-login password
+        pwd=new JPasswordField();
+        loginPanel.add(pwd, new AbsoluteConstraints(115, 132, 164, 28));
+        loginPanel.setComponentZOrder(pwd, 0);
+        pwd.setBorder(null);
+        pwd.setBackground(null);
+        pwd.setHorizontalAlignment(JTextField.CENTER);
+        pwd.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 15));
+        pwd.setForeground(new Color(30,50,30));
+    }//GEN-LAST:event_loginBtnMouseClicked
+    
+    private void loginSubmit() throws SQLException{
+        
+        try{
+            
+            String currentUser, currentPwd, enteredUname, enteredPwd, query;
+            
+            enteredUname=uname.getText().toLowerCase();
+            enteredPwd=Arrays.toString(pwd.getPassword());
+            Statement stm=connt.getConn().createStatement();
+            query="SELECT USER_NAME, PASSWORD FROM employee WHERE USER_NAME='"+enteredUname+"' AND PASSWORD='"+enteredPwd+"'";
+            ResultSet rs=stm.executeQuery(query);
+            
+            System.out.println(enteredUname);
+            System.out.println(enteredPwd);
+            
+            while(rs.next()){
+                currentUser=rs.getString(0);
+                currentPwd=rs.getString(1);
+
+                if(enteredUname.equals(currentUser) && enteredPwd.equals(currentPwd)){
+                    JOptionPane.showMessageDialog(main.mainFrame, "Successfully logged in!");
+                    System.out.println(enteredUname+" "+enteredPwd);
+                    connt.getConn().close();
+                    break;
+                }else{
+                    JOptionPane.showMessageDialog(main.mainFrame, "Login error!");
+                }
+            }
+            connt.getConn().close();
+            
+            
+        }catch(SQLException e){
+            
+        }
+    }
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -186,6 +339,8 @@ public class WcScreen extends javax.swing.JFrame {
                     Logger.getLogger(WcScreen.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (InterruptedException ex) {
                     Logger.getLogger(WcScreen.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (SQLException ex) {
+                    Logger.getLogger(WcScreen.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         });
@@ -202,4 +357,11 @@ public class WcScreen extends javax.swing.JFrame {
     
     //custom variables
     Color tempClr;
+    JPanel loginPanel;
+    JLabel loginBg;
+    JLabel closeGreen;
+    JLabel login2Btn, reset2Btn;
+    JTextField uname;
+    JPasswordField pwd;
+    static DbmsConn connt;
 }

@@ -15,6 +15,7 @@ public class logged_admin extends javax.swing.JFrame {
      */
     public logged_admin() {
         initComponents();
+        this.setExtendedState(MAXIMIZED_BOTH);
     }
 
     /**
@@ -45,57 +46,29 @@ public class logged_admin extends javax.swing.JFrame {
         tables = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Inventory");
+        setSize(new java.awt.Dimension(1366, 768));
 
         side_pannel.setBackground(new java.awt.Color(255, 255, 255));
+        side_pannel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Graphics/logo1.jpg"))); // NOI18N
+        side_pannel.add(logo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 13, 140, 160));
 
         logo_text.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Graphics/logo2.jpg"))); // NOI18N
+        side_pannel.add(logo_text, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 90, -1, 78));
 
-        welcome_text.setFont(new java.awt.Font("Segoe UI Black", 1, 60)); // NOI18N
+        welcome_text.setFont(new java.awt.Font("Segoe UI Black", 1, 50)); // NOI18N
         welcome_text.setForeground(new java.awt.Color(38, 38, 38));
         welcome_text.setText("Welcome");
+        side_pannel.add(welcome_text, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 30, 388, 68));
 
         profile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Graphics/profile1.jpg"))); // NOI18N
+        side_pannel.add(profile, new org.netbeans.lib.awtextra.AbsoluteConstraints(1184, 18, -1, -1));
 
         logged_type.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
         logged_type.setText("LOGGED - ADMIN");
-
-        javax.swing.GroupLayout side_pannelLayout = new javax.swing.GroupLayout(side_pannel);
-        side_pannel.setLayout(side_pannelLayout);
-        side_pannelLayout.setHorizontalGroup(
-            side_pannelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(side_pannelLayout.createSequentialGroup()
-                .addComponent(logo)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(side_pannelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(logo_text)
-                    .addComponent(welcome_text, javax.swing.GroupLayout.PREFERRED_SIZE, 388, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(side_pannelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, side_pannelLayout.createSequentialGroup()
-                        .addComponent(logged_type, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(19, 19, 19))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, side_pannelLayout.createSequentialGroup()
-                        .addComponent(profile, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(56, 56, 56))))
-        );
-        side_pannelLayout.setVerticalGroup(
-            side_pannelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(side_pannelLayout.createSequentialGroup()
-                .addGroup(side_pannelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(logo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, side_pannelLayout.createSequentialGroup()
-                        .addComponent(welcome_text)
-                        .addGap(12, 12, 12)
-                        .addComponent(logo_text, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, side_pannelLayout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(profile, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(logged_type, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
+        side_pannel.add(logged_type, new org.netbeans.lib.awtextra.AbsoluteConstraints(1148, 124, 173, 20));
 
         database_controls.setBackground(new java.awt.Color(0, 102, 102));
 
@@ -170,7 +143,7 @@ public class logged_admin extends javax.swing.JFrame {
             .addGroup(bill_buttonLayout.createSequentialGroup()
                 .addGap(47, 47, 47)
                 .addComponent(bill, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(49, Short.MAX_VALUE))
+                .addContainerGap(39, Short.MAX_VALUE))
         );
 
         table_preview.setBackground(new java.awt.Color(0, 153, 153));
@@ -195,7 +168,7 @@ public class logged_admin extends javax.swing.JFrame {
             .addGroup(table_previewLayout.createSequentialGroup()
                 .addGap(32, 32, 32)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 840, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(38, Short.MAX_VALUE))
+                .addContainerGap(159, Short.MAX_VALUE))
         );
         table_previewLayout.setVerticalGroup(
             table_previewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
