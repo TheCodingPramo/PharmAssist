@@ -1,11 +1,12 @@
-package frames;
+ package frames;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.sql.ResultSet;
+import java.sql.*;
 import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,7 +23,6 @@ public class WcScreen extends javax.swing.JFrame {
     public WcScreen() throws IOException, InterruptedException, SQLException {
         initComponents();
         customize();
-        connt=new DbmsConn();
     }
     
     public final void customize() throws InterruptedException{
@@ -47,12 +47,6 @@ public class WcScreen extends javax.swing.JFrame {
 
     public JLabel getGreet() {
         return greet;
-    }
-
-    private void loginForm(){
-        JPanel loginform= new JPanel(null);
-        
-        mainPanel.add(loginform);
     }
     
     @SuppressWarnings("unchecked")
@@ -239,8 +233,10 @@ public class WcScreen extends javax.swing.JFrame {
             
             @Override
             public void mouseClicked(MouseEvent evt){
-                uname.setText(null);
-                pwd.setText(null);
+                uname.setEditable(true);
+                pwd.setEditable(true);
+                uname.setText("");
+                pwd.setText("");
             }
             
             @Override
@@ -258,6 +254,19 @@ public class WcScreen extends javax.swing.JFrame {
         uname.setHorizontalAlignment(JTextField.CENTER);
         uname.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 15));
         uname.setForeground(new Color(30,50,30));
+        uname.addKeyListener(new KeyAdapter(){
+            @Override
+            public void keyPressed(KeyEvent e){
+                int keyCode=e.getKeyCode();
+                if(keyCode==10){
+                    try {
+                    loginSubmit();
+                } catch (SQLException ex) {
+                    Logger.getLogger(WcScreen.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                }
+            }
+        });
         
         //pwd-login password
         pwd=new JPasswordField();
@@ -266,46 +275,63 @@ public class WcScreen extends javax.swing.JFrame {
         pwd.setBorder(null);
         pwd.setBackground(null);
         pwd.setHorizontalAlignment(JTextField.CENTER);
+        pwd.addKeyListener(new KeyAdapter(){
+            @Override
+            public void keyPressed(KeyEvent e){
+                int keyCode=e.getKeyCode();
+                if(keyCode==10){
+                    try {
+                    loginSubmit();
+                } catch (SQLException ex) {
+                    Logger.getLogger(WcScreen.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                }
+            }
+        });
+        
         pwd.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 15));
         pwd.setForeground(new Color(30,50,30));
     }//GEN-LAST:event_loginBtnMouseClicked
     
     private void loginSubmit() throws SQLException{
-        
         try{
-            
-            String currentUser, currentPwd, enteredUname, enteredPwd, query;
+            connt=new DbmsConn();
+            String enteredUname, enteredPwd, query2login;
             
             enteredUname=uname.getText().toLowerCase();
-            enteredPwd=Arrays.toString(pwd.getPassword());
-            Statement stm=connt.getConn().createStatement();
-            query="SELECT USER_NAME, PASSWORD FROM employee WHERE USER_NAME='"+enteredUname+"' AND PASSWORD='"+enteredPwd+"'";
-            ResultSet rs=stm.executeQuery(query);
+            enteredPwd=pwd.getText();
             
-            System.out.println(enteredUname);
-            System.out.println(enteredPwd);
+            query2login="SELECT USER_NAME, PASSWORD FROM employee WHERE USER_NAME='"+enteredUname+"' AND PASSWORD='"+enteredPwd+"'";
+            PreparedStatement stm=connt.getConn().prepareStatement(query2login);
+            ResultSet rs=stm.executeQuery(query2login);
             
-            while(rs.next()){
-                currentUser=rs.getString(0);
-                currentPwd=rs.getString(1);
-
-                if(enteredUname.equals(currentUser) && enteredPwd.equals(currentPwd)){
-                    JOptionPane.showMessageDialog(main.mainFrame, "Successfully logged in!");
-                    System.out.println(enteredUname+" "+enteredPwd);
-                    connt.getConn().close();
-                    break;
-                }else{
-                    JOptionPane.showMessageDialog(main.mainFrame, "Login error!");
+            if(rs.next()){
+                currentUser=enteredUname;
+                
+                //getting usertype
+                currentUserType=null;
+                String query2UserType="SELECT job_role FROM employee WHERE user_name=\""+currentUser+"\";";
+                PreparedStatement stm2=connt.getConn().prepareStatement(query2UserType);
+                ResultSet rs2=stm2.executeQuery(query2UserType);
+                while(rs2.next()){
+                    currentUserType=rs2.getString("job_role");
                 }
+                
+                JOptionPane.showMessageDialog(null, "Successfully logged in!\nLogged user :"+ currentUser +" ("+currentUserType+")");
+
+            }else{
+                JOptionPane.showMessageDialog(null, "Login failed!");
             }
+            uname.setEditable(false);
+            pwd.setEditable(false);
+            
             connt.getConn().close();
             
             
         }catch(SQLException e){
-            
+            System.out.println(e);
         }
     }
-    
     
     /**
      * @param args the command line arguments
@@ -363,5 +389,6 @@ public class WcScreen extends javax.swing.JFrame {
     JLabel login2Btn, reset2Btn;
     JTextField uname;
     JPasswordField pwd;
-    static DbmsConn connt;
+    DbmsConn connt=null;
+    String currentUser, currentUserType;
 }

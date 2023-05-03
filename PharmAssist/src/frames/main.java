@@ -8,11 +8,7 @@ public class main {
     
     public static void main(String[] args) throws IOException, InterruptedException, SQLException {
         mainFrame=new WcScreen();
-        try{
-            WcScreen.connt.createDbConnection();
-        }catch(Exception e){
-            
-        }
+        
         mainFrame.setVisible(true);
         Time newThread=new Time();
         

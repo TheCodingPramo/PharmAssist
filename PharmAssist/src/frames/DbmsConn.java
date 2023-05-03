@@ -15,10 +15,9 @@ public class DbmsConn {
 
     public DbmsConn() throws SQLException{
         createDbConnection();
-        conn.close();
     }
     
-    public final void createDbConnection(){
+    public final void createDbConnection(){ //crete the connection with DB
         try{
             Class.forName("com.mysql.cj.jdbc.Driver"); //load and reg the JDBC Driver
             
