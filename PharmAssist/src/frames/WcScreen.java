@@ -162,7 +162,7 @@ public class WcScreen extends javax.swing.JFrame {
         //hide login btn
         loginBtn.setVisible(false);
         bgImage.setEnabled(false);
-        bgImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Graphics/welcome screen3-disabled.jpg")));
+        //bgImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Graphics/welcome screen3-disabled.jpg")));
         
         //loginbg- login screen background
         loginBg=new JLabel();
@@ -176,7 +176,7 @@ public class WcScreen extends javax.swing.JFrame {
         mainPanel.setComponentZOrder(loginPanel, 0);
         loginPanel.add(loginBg, new AbsoluteConstraints(0, 0,320,375));
 
-        //closeGreen- login form close button
+        //closeGreen- login form->close button
         closeGreen=new JLabel(new ImageIcon(getClass().getResource("/Graphics/Close_green.png")));
         loginPanel.add(closeGreen, new AbsoluteConstraints(295, 0,25,25));
         loginPanel.setComponentZOrder(closeGreen, 0);
@@ -186,7 +186,6 @@ public class WcScreen extends javax.swing.JFrame {
             public void mouseClicked(MouseEvent evt){
                 bgImage.setEnabled(true);
                 bgImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Graphics/welcome screen3.jpg")));
-                loginPanel.setEnabled(false);
                 loginPanel.setVisible(false);
                 loginBtn.setVisible(true);
             }
@@ -318,7 +317,7 @@ public class WcScreen extends javax.swing.JFrame {
                 }
                 
                 JOptionPane.showMessageDialog(null, "Successfully logged in!\nLogged user :"+ currentUser +" ("+currentUserType+")");
-
+                
             }else{
                 JOptionPane.showMessageDialog(null, "Login failed!");
             }
@@ -327,9 +326,14 @@ public class WcScreen extends javax.swing.JFrame {
             
             connt.getConn().close();
             
+            if("ADMIN".equals(currentUserType) && currentUserType!=null){
+                System.out.println("adminnnnn");
+                loginPanel.setVisible(false);
+                new logged_admin();
+            }
             
         }catch(SQLException e){
-            System.out.println(e);
+            JOptionPane.showMessageDialog(null, e);
         }
     }
     

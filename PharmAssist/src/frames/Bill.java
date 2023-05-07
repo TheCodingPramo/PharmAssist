@@ -2,8 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package loginyt;
+package frames;
 
+import java.awt.HeadlessException;
 import java.awt.event.KeyEvent;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -24,72 +25,64 @@ public class Bill extends javax.swing.JFrame {
     /**
      * Creates new form Bill
      */
-    
     public Bill() {
         initComponents();
         billHeader();
-       unitPrice.setEditable(false);
+        unitPrice.setEditable(false);
         billID.setEditable(false);
-        
-        
-   
+
     }
-private void billHeader(){
-    jTextArea1.setText("                     ****************************************************************************************************************"+"\n"+"\t\t\t"+" LIFE CARE PHARMACY "+"\n"+"\t"+"Contact no:+94412273696"+"\t\t\t"+"No 06,Uyanwatta,Matara."+"\n"+"                     ****************************************************************************************************************"+"\n\n"+jTextArea1.getText()+"                     Bill ID:"+"\t"+billID.getText()+"\n"+"\n"+" \t "+"Medicine"+" \t "+"Qty"+" \t "+"Price"+" \t "+"Total Price"+"\n\n");
-   
-    
-}
+
+    private void billHeader() {
+        jTextArea1.setText("""
+                                            ****************************************************************************************************************
+                       \t\t\t LIFE CARE PHARMACY 
+                       \tContact no:+94412273696\t\t\tNo 06,Uyanwatta,Matara.
+                                            ****************************************************************************************************************
+                       
+                       """ + jTextArea1.getText() + "                     Bill ID:" + "\t" + billID.getText() + "\n" + "\n" + " \t " + "Medicine" + " \t " + "Qty" + " \t " + "Price" + " \t " + "Total Price" + "\n\n");
+
+    }
 
 //copy this method
-private void printTextArea(){
+    private void printTextArea() {
 
-total = total+ Double.parseDouble(qty.getText())*Double.parseDouble(unitPrice.getText());
-                                  String stotal = Double.toString(total);
-                  
-                                 jTextArea1.setText(jTextArea1.getText()+"\t"+select.getText()+"\t"+qty.getText()+"\t"+unitPrice.getText()+"\t"+Double.parseDouble(qty.getText())*Double.parseDouble(unitPrice.getText())+"\t\t"+ stotal+"\n");
+        total = total + Double.parseDouble(qty.getText()) * Double.parseDouble(unitPrice.getText());
+        String stotal = Double.toString(total);
 
+        jTextArea1.setText(jTextArea1.getText() + "\t" + select.getText() + "\t" + qty.getText() + "\t" + unitPrice.getText() + "\t" + Double.parseDouble(qty.getText()) * Double.parseDouble(unitPrice.getText()) + "\t\t" + stotal + "\n");
 
-
-}
+    }
 //copythis method
-private void updateDrugTable(java.sql.Connection con){
-    
-    
-                                try{
- 
-                                 String query1 ="SET SQL_SAFE_UPDATES =0";
-                                 String query2 = "update drug set quantity = quantity - ? where dname = ?";
-                                 String query3 ="SET SQL_SAFE_UPDATES =1";
-         
-         
-         
-                                 PreparedStatement ps1 = con.prepareStatement(query1);
-                                 PreparedStatement ps2 = con.prepareStatement(query2);
-                                 PreparedStatement ps3 = con.prepareStatement(query3);
-         
-                                 ps2.setString(1,qty.getText());
-                                 ps2.setString(2,select.getText());
-         
-           
-                                 ps1.executeUpdate();
-                                 ps2.executeUpdate();
-                                 ps3.executeUpdate();
-                                 
-                                 
-                                 con.close();
-                                 ps1.close();
-                                 ps2.close();
-                                 ps3.close();
 
-                                }
-                                
-                                catch (Exception e){}
+    private void updateDrugTable(java.sql.Connection con) {
 
+        try {
 
-}
+            String query1 = "SET SQL_SAFE_UPDATES =0";
+            String query2 = "update drug set quantity = quantity - ? where dname = ?";
+            String query3 = "SET SQL_SAFE_UPDATES =1";
 
+            PreparedStatement ps1 = con.prepareStatement(query1);
+            PreparedStatement ps2 = con.prepareStatement(query2);
+            PreparedStatement ps3 = con.prepareStatement(query3);
 
+            ps2.setString(1, qty.getText());
+            ps2.setString(2, select.getText());
 
+            ps1.executeUpdate();
+            ps2.executeUpdate();
+            ps3.executeUpdate();
+
+            con.close();
+            ps1.close();
+            ps2.close();
+            ps3.close();
+
+        } catch (SQLException e) {
+        }
+
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -103,7 +96,7 @@ private void updateDrugTable(java.sql.Connection con){
         jCheckBox1 = new javax.swing.JCheckBox();
         jScrollPane1 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList<>();
-        buttonGroup1 = new javax.swing.ButtonGroup();
+        new javax.swing.ButtonGroup();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jScrollPane4 = new javax.swing.JScrollPane();
@@ -142,21 +135,23 @@ private void updateDrugTable(java.sql.Connection con){
         jCheckBox1.setText("jCheckBox1");
 
         jList1.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
+            String[] strings = {"Item 1", "Item 2", "Item 3", "Item 4", "Item 5"};
+
+            public int getSize() {
+                return strings.length;
+            }
+
+            public String getElementAt(int i) {
+                return strings[i];
+            }
         });
         jScrollPane1.setViewportView(jList1);
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-               
-            },
-            new String [] {
-               
-            }
+                new Object[][]{},
+                new String[]{}
         ));
-        
+
         jScrollPane2.setViewportView(jTable1);
 
         jTextArea2.setColumns(20);
@@ -223,30 +218,29 @@ private void updateDrugTable(java.sql.Connection con){
 
         jLabel8.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
         jLabel8.setText("Tel no");
-        
+
         //copy this method
-         qty.addKeyListener(new java.awt.event.KeyAdapter() {
+        qty.addKeyListener(new java.awt.event.KeyAdapter() {
             @Override
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 qtyKeyPressed(evt);
             }
         });
-         //copy this mthod
-         customerName.addKeyListener(new java.awt.event.KeyAdapter() {
+        //copy this mthod
+        customerName.addKeyListener(new java.awt.event.KeyAdapter() {
             @Override
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 customerNameKeyPressed(evt);
             }
         });
-         //copy this method
-          TelNo.addKeyListener(new java.awt.event.KeyAdapter() {
+        //copy this method
+        TelNo.addKeyListener(new java.awt.event.KeyAdapter() {
             @Override
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 TelNoKeyPressed(evt);
             }
         });
-          
-           
+
         TelNo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 TelNoActionPerformed(evt);
@@ -272,90 +266,90 @@ private void updateDrugTable(java.sql.Connection con){
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(14, 14, 14)
-                        .addComponent(clear)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(addToBill, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(add, javax.swing.GroupLayout.Alignment.TRAILING)))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 73, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(unitPrice, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 491, Short.MAX_VALUE)
-                            .addComponent(qty, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(select, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(billID, javax.swing.GroupLayout.Alignment.TRAILING)))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(clear2)
-                            .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel7))
-                        .addGap(51, 51, 51)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(TelNo, javax.swing.GroupLayout.DEFAULT_SIZE, 492, Short.MAX_VALUE)
-                            .addComponent(customerName))))
-                .addGap(51, 51, 51))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(279, 279, 279)
-                        .addComponent(jLabel2))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(298, 298, 298)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(21, 21, 21)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(jPanel2Layout.createSequentialGroup()
+                                                .addGap(14, 14, 14)
+                                                .addComponent(clear)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(addToBill, javax.swing.GroupLayout.Alignment.TRAILING)
+                                                        .addComponent(add, javax.swing.GroupLayout.Alignment.TRAILING)))
+                                        .addGroup(jPanel2Layout.createSequentialGroup()
+                                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                        .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 73, Short.MAX_VALUE))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                        .addComponent(unitPrice, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 491, Short.MAX_VALUE)
+                                                        .addComponent(qty, javax.swing.GroupLayout.Alignment.TRAILING)
+                                                        .addComponent(select, javax.swing.GroupLayout.Alignment.TRAILING)
+                                                        .addComponent(billID, javax.swing.GroupLayout.Alignment.TRAILING)))
+                                        .addGroup(jPanel2Layout.createSequentialGroup()
+                                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                        .addComponent(clear2)
+                                                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(jLabel7))
+                                                .addGap(51, 51, 51)
+                                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                        .addComponent(TelNo, javax.swing.GroupLayout.DEFAULT_SIZE, 492, Short.MAX_VALUE)
+                                                        .addComponent(customerName))))
+                                .addGap(51, 51, 51))
+                        .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(jPanel2Layout.createSequentialGroup()
+                                                .addGap(279, 279, 279)
+                                                .addComponent(jLabel2))
+                                        .addGroup(jPanel2Layout.createSequentialGroup()
+                                                .addGap(298, 298, 298)
+                                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(billID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(select, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
-                .addGap(17, 17, 17)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(qty, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(unitPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(27, 27, 27)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(clear)
-                    .addComponent(addToBill))
-                .addGap(55, 55, 55)
-                .addComponent(jLabel2)
-                .addGap(31, 31, 31)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(customerName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7))
-                .addGap(17, 17, 17)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(TelNo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(49, 49, 49)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(clear2)
-                            .addComponent(add)))
-                    .addComponent(jLabel8))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(22, 22, 22)
+                                .addComponent(jLabel1)
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(billID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(select, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel4))
+                                .addGap(17, 17, 17)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(qty, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel5))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(unitPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(27, 27, 27)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(clear)
+                                        .addComponent(addToBill))
+                                .addGap(55, 55, 55)
+                                .addComponent(jLabel2)
+                                .addGap(31, 31, 31)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(customerName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel7))
+                                .addGap(17, 17, 17)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(jPanel2Layout.createSequentialGroup()
+                                                .addComponent(TelNo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(49, 49, 49)
+                                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                        .addComponent(clear2)
+                                                        .addComponent(add)))
+                                        .addComponent(jLabel8))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel3.setBackground(new java.awt.Color(204, 255, 204));
@@ -372,12 +366,10 @@ private void updateDrugTable(java.sql.Connection con){
         });
         //remove content of the jtable2
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                //remove content 
-            },
-            new String [] {
-               //remove content 
-            }
+                new Object[][]{ //remove content 
+                },
+                new String[]{ //remove content 
+                }
         ));
         //copy from here 
         jTable2.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -390,33 +382,33 @@ private void updateDrugTable(java.sql.Connection con){
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(40, Short.MAX_VALUE)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 429, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1))
-                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(693, 693, 693))
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(31, 31, 31)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 672, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                                .addContainerGap(40, Short.MAX_VALUE)
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(jPanel3Layout.createSequentialGroup()
+                                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 429, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(jButton1))
+                                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(693, 693, 693))
+                        .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGap(31, 31, 31)
+                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 672, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(11, Short.MAX_VALUE)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jTextField1)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(127, 127, 127)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(63, 63, 63))
+                jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                                .addContainerGap(11, Short.MAX_VALUE)
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(jTextField1)
+                                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(127, 127, 127)
+                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(63, 63, 63))
         );
 
         jButton5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -436,337 +428,279 @@ private void updateDrugTable(java.sql.Connection con){
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(12, 12, 12)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(161, 161, 161)
-                .addComponent(jButton5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton2)
-                .addGap(368, 368, 368)
-                .addComponent(jButton6)
-                .addGap(160, 160, 160))
+                jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(12, 12, 12)
+                                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(32, 32, 32))
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(161, 161, 161)
+                                .addComponent(jButton5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButton2)
+                                .addGap(368, 368, 368)
+                                .addComponent(jButton6)
+                                .addGap(160, 160, 160))
         );
         jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton5)
-                    .addComponent(jButton6)
-                    .addComponent(jButton2))
-                .addGap(0, 5, Short.MAX_VALUE))
+                jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(jButton5)
+                                        .addComponent(jButton6)
+                                        .addComponent(jButton2))
+                                .addGap(0, 5, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 1543, javax.swing.GroupLayout.PREFERRED_SIZE)
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 1543, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    
+
     //copy this method
-      private void qtyKeyPressed(java.awt.event.KeyEvent evt) {                                
-        
-       String  q = qty.getText();
-       char c = evt.getKeyChar();
-       
-       if (c>='0' && c<='9'){
-       
-          qty.setEditable(true);
-       
-       }
-       else{ if(evt.getExtendedKeyCode()== KeyEvent.VK_BACK_SPACE || evt.getExtendedKeyCode()== KeyEvent.VK_DELETE ){
-       
-          qty.setEditable(true);
-          }
-          else {
-       
-             qty.setEditable(false);
+    private void qtyKeyPressed(java.awt.event.KeyEvent evt) {
+
+        char c = evt.getKeyChar();
+
+        if (c >= '0' && c <= '9') {
+
+            qty.setEditable(true);
+
+        } else {
+            if (evt.getExtendedKeyCode() == KeyEvent.VK_BACK_SPACE || evt.getExtendedKeyCode() == KeyEvent.VK_DELETE) {
+
+                qty.setEditable(true);
+            } else {
+
+                qty.setEditable(false);
             }
-          
-       }
-       
-       
-    }  
-      //copy this method
-       private void TelNoKeyPressed(java.awt.event.KeyEvent evt) {                                
-        
-       String  no = TelNo.getText();
-       int len = no.length();
-       char c = evt.getKeyChar();
-       
-       if (c>='0' && c<='9'){
-           
-          if(len<10){
-          TelNo.setEditable(true);
-         }
-          
-         
-         else{
-          TelNo.setEditable(false);
-          }
-       }
-       else {
-            if(evt.getExtendedKeyCode()== KeyEvent.VK_BACK_SPACE || evt.getExtendedKeyCode()== KeyEvent.VK_DELETE ){
-       
+
+        }
+
+    }
+    //copy this method
+
+    private void TelNoKeyPressed(java.awt.event.KeyEvent evt) {
+
+        String no = TelNo.getText();
+        int len = no.length();
+        char c = evt.getKeyChar();
+
+        if (c >= '0' && c <= '9') {
+
+            if (len < 10) {
                 TelNo.setEditable(true);
+            } else {
+                TelNo.setEditable(false);
             }
-       
-             else {
-       
-             TelNo.setEditable(false);
+        } else {
+            if (evt.getExtendedKeyCode() == KeyEvent.VK_BACK_SPACE || evt.getExtendedKeyCode() == KeyEvent.VK_DELETE) {
+
+                TelNo.setEditable(true);
+            } else {
+
+                TelNo.setEditable(false);
             }
-       
-       }
-          
-          
-       
-       
-       
-      
-       
-    }  
-     //copy this method  
-    private void customerNameKeyPressed(java.awt.event.KeyEvent evt) {                                
-        
-      
-       char c = evt.getKeyChar();
-       
-       if (Character.isLetter(c)||Character.isWhitespace(c)|| Character.isISOControl(c)||c =='\''){
-       
-          customerName.setEditable(true);
-       
-       }
-       else{ 
-       
-           customerName.setEditable(false);
-                 
-          
-       }
-       
-       
-    }  
-     //copy this method 
-     private void jTable2MouseClicked(java.awt.event.MouseEvent evt) {                                
-        
+
+        }
+
+    }
+    //copy this method  
+
+    private void customerNameKeyPressed(java.awt.event.KeyEvent evt) {
+
+        char c = evt.getKeyChar();
+
+        if (Character.isLetter(c) || Character.isWhitespace(c) || Character.isISOControl(c) || c == '\'') {
+
+            customerName.setEditable(true);
+
+        } else {
+
+            customerName.setEditable(false);
+
+        }
+
+    }
+    //copy this method 
+
+    private void jTable2MouseClicked(java.awt.event.MouseEvent evt) {
+
         //copy all inside this method
-        int i =jTable2.getSelectedRow();
+        int i = jTable2.getSelectedRow();
         TableModel model = jTable2.getModel();
         select.setText(model.getValueAt(i, 1).toString());
         unitPrice.setText(model.getValueAt(i, 3).toString());
-      // setText("yyyyyyy");
-    }  
+        // setText("yyyyyyy");
+    }
+
     private void TelNoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TelNoActionPerformed
         // TODO add your handling code here:
-      
 
-        
-        
-       
-        
-        
     }//GEN-LAST:event_TelNoActionPerformed
-   
+
     private void addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addActionPerformed
         // TODO add your handling code here:
-        
-        
-        jTextArea1.setText(jTextArea1.getText()+"\n"+"       Customer Name:"+"  "+customerName.getText()+"\t");
-        jTextArea1.setText(jTextArea1.getText()+"Tel no:"+"  "+TelNo.getText()+"\n\n");
-        
+
+        jTextArea1.setText(jTextArea1.getText() + "\n" + "       Customer Name:" + "  " + customerName.getText() + "\t");
+        jTextArea1.setText(jTextArea1.getText() + "Tel no:" + "  " + TelNo.getText() + "\n\n");
+
     }//GEN-LAST:event_addActionPerformed
-     static double total =0;
+    static double total = 0;
+
     private void addToBillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addToBillActionPerformed
         //statements to set text to the textarea are now included in printTextAreaMethod. So remove them from your original code
         //copy all inside this try block
-       try{
-          
-       
-          Class.forName("com.mysql.cj.jdbc.Driver");
-           //establishes connection
-           //change usernames etc.
-          java.sql.Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/PHARMASSIST", "root","pswd");
-         
-          String quantity = qty.getText();
-          String med = select.getText();
-         
-         
-          String cquery = "select quantity from drug where dname =?";
-         
-    
-          
-         PreparedStatement cps = con.prepareStatement(cquery);
-         cps.setString(1,med);
-          
-         ResultSet rs = cps.executeQuery();
-        
-        
-        if (rs.next())  {
-            
-           
-            
-            
-             String cqty = rs.getString(1);
-         
-        
-          
-             int limit= Integer.parseInt(cqty);
-             int iqty =Integer.parseInt(quantity);
-             
-         
-                if (iqty <= limit && iqty !=0){
-             
-                    String expquery ="SELECT DATEDIFF(  EXP_DATE,  CAST(CURRENT_TIMESTAMP  AS Date )  ) from drug where dname =?";
+        try {
+
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            //establishes connection
+            //change usernames etc.
+            java.sql.Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/PHARMASSIST", "root", "pswd");
+
+            String quantity = qty.getText();
+            String med = select.getText();
+
+            String cquery = "select quantity from drug where dname =?";
+
+            PreparedStatement cps = con.prepareStatement(cquery);
+            cps.setString(1, med);
+
+            ResultSet rs = cps.executeQuery();
+
+            if (rs.next()) {
+
+                String cqty = rs.getString(1);
+
+                int limit = Integer.parseInt(cqty);
+                int iqty = Integer.parseInt(quantity);
+
+                if (iqty <= limit && iqty != 0) {
+
+                    String expquery = "SELECT DATEDIFF(  EXP_DATE,  CAST(CURRENT_TIMESTAMP  AS Date )  ) from drug where dname =?";
                     PreparedStatement eps = con.prepareStatement(expquery);
-                    eps.setString(1,med);
+                    eps.setString(1, med);
                     ResultSet rs2 = eps.executeQuery();
-            
-           
-                    if(rs2.next()){
-                        if(Integer.parseInt(rs2.getString(1))>0)  {
-                             if(Integer.parseInt(rs2.getString(1))>180){
-                                  
-                                 
 
-                                 printTextArea();
-                                 updateDrugTable(con);
-         
-                                int msg = JOptionPane.showConfirmDialog(null, "Database succesfully updated!", "Message", JOptionPane.DEFAULT_OPTION,JOptionPane.PLAIN_MESSAGE);
-                                if ( msg == JOptionPane.OK_OPTION){
+                    if (rs2.next()) {
+                        if (Integer.parseInt(rs2.getString(1)) > 0) {
+                            if (Integer.parseInt(rs2.getString(1)) > 180) {
+
+                                printTextArea();
+                                updateDrugTable(con);
+
+                                int msg = JOptionPane.showConfirmDialog(null, "Database succesfully updated!", "Message", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE);
+                                if (msg == JOptionPane.OK_OPTION) {
                                     select.setText("");
                                     qty.setText("");
                                     unitPrice.setText("");
-                                  }
-                                else{
+                                } else {
                                     select.setText("");
                                     qty.setText("");
                                     unitPrice.setText("");
-                                
-                                
-                                  }
-       
+
                                 }
-                                //if expiration within 180 days
-                                else {
-         
-       
-                                int resp =JOptionPane.showConfirmDialog(this, "Only "+rs2.getString(1)+" days left till  expiration.Do you wish to proceed?","Warning!",JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
-                                if (resp ==JOptionPane.OK_OPTION){
-                                    
-                                   
-                                   printTextArea();
-                                   updateDrugTable(con);
-                                   
-        
-                                    int msg = JOptionPane.showConfirmDialog(null, "Database succesfully updated!", "Message", JOptionPane.DEFAULT_OPTION,JOptionPane.PLAIN_MESSAGE);
-                                    if ( msg == JOptionPane.OK_OPTION){
-                                    select.setText("");
-                                    qty.setText("");
-                                    unitPrice.setText("");
-           
-           
-                                    }
-                                    else{
-                                    select.setText("");
-                                    qty.setText("");
-                                    unitPrice.setText("");
-                                    
-                                    
-                                    }
-       
-       
-                                    }
-                                    else {
-                                    select.setText("");
-                                    qty.setText("");
-                                    unitPrice.setText("");
-           
-                                     }
-           
-                                 }
-             
-                             }
-                  else {
-                  //if result is less than 0
-         
-                      
-                    int msg = JOptionPane.showConfirmDialog(null, "Drug Expired!", "Warning!", JOptionPane.DEFAULT_OPTION,JOptionPane.PLAIN_MESSAGE);
-                     if ( msg == JOptionPane.OK_OPTION){
-                     select.setText("");
-                     qty.setText("");
-                     unitPrice.setText("");
-                     }
-                     else{
-                     select.setText("");
-                     qty.setText("");
-                     unitPrice.setText("");
-                     
-                     
-                     }
-        
-                  }
-                  
-              } //end of rs2.next for exp date
-            } //end of stock check if /second if
-         
-         else if(iqty>limit)  {
-         
-         JOptionPane.showMessageDialog( this,"Only "+rs.getString(1)+" units are available!" );
-         
-           } 
-           else if(iqty ==0)  {
-         
 
-        
-         int msg = JOptionPane.showConfirmDialog(null, " 0 is not a valid quantity", "Message", JOptionPane.DEFAULT_OPTION,JOptionPane.PLAIN_MESSAGE);
-                                if ( msg == JOptionPane.OK_OPTION){
-                                    
+                            } //if expiration within 180 days
+                            else {
+
+                                int resp = JOptionPane.showConfirmDialog(this, "Only " + rs2.getString(1) + " days left till  expiration.Do you wish to proceed?", "Warning!", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+                                if (resp == JOptionPane.OK_OPTION) {
+
+                                    printTextArea();
+                                    updateDrugTable(con);
+
+                                    int msg = JOptionPane.showConfirmDialog(null, "Database succesfully updated!", "Message", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE);
+                                    if (msg == JOptionPane.OK_OPTION) {
+                                        select.setText("");
+                                        qty.setText("");
+                                        unitPrice.setText("");
+
+                                    } else {
+                                        select.setText("");
+                                        qty.setText("");
+                                        unitPrice.setText("");
+
+                                    }
+
+                                } else {
+                                    select.setText("");
                                     qty.setText("");
-                                   
-                                  }
-                                else{
-                                    
-                                    qty.setText("");
-                                    
-                                
-                                
-                                  }
-         
-           } //end of stock check else
-       
-        } //end of if (rs.next()) / first if
-       
-       } //end of try
-       //copy catch
-       catch(Exception e){}//end of catch
-       
-       
-        
+                                    unitPrice.setText("");
+
+                                }
+
+                            }
+
+                        } else {
+                            //if result is less than 0
+
+                            int msg = JOptionPane.showConfirmDialog(null, "Drug Expired!", "Warning!", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE);
+                            if (msg == JOptionPane.OK_OPTION) {
+                                select.setText("");
+                                qty.setText("");
+                                unitPrice.setText("");
+                            } else {
+                                select.setText("");
+                                qty.setText("");
+                                unitPrice.setText("");
+
+                            }
+
+                        }
+
+                    } //end of rs2.next for exp date
+                } //end of stock check if /second if
+                else if (iqty > limit) {
+
+                    JOptionPane.showMessageDialog(this, "Only " + rs.getString(1) + " units are available!");
+
+                } else if (iqty == 0) {
+
+                    int msg = JOptionPane.showConfirmDialog(null, " 0 is not a valid quantity", "Message", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE);
+                    if (msg == JOptionPane.OK_OPTION) {
+
+                        qty.setText("");
+
+                    } else {
+
+                        qty.setText("");
+
+                    }
+
+                } //end of stock check else
+
+            } //end of if (rs.next()) / first if
+
+        } //end of try
+        //copy catch
+        catch (HeadlessException | ClassNotFoundException | NumberFormatException | SQLException e) {
+        }//end of catch
+
     }//GEN-LAST:event_addToBillActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
-        try{
+        try {
             jTextArea1.print();
-        }catch(Exception e){
-            
+        } catch (Exception e) {
+
         }
     }//GEN-LAST:event_jButton6ActionPerformed
 
@@ -780,82 +714,76 @@ private void updateDrugTable(java.sql.Connection con){
 
     private void clear2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clear2ActionPerformed
         // TODO add your handling code here:
-         customerName.setText("");
+        customerName.setText("");
         TelNo.setText("");
-            
+
     }//GEN-LAST:event_clear2ActionPerformed
 
     private void billIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_billIDActionPerformed
-      
-        
-      
+
     }//GEN-LAST:event_billIDActionPerformed
 
     private void selectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_selectActionPerformed
-    
-    
+
     // copy all inside the below method
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
-         jTable2.setModel(new DefaultTableModel());
-                 
-        try{
-         Class.forName("com.mysql.cj.jdbc.Driver");
-           //establishes connection
-           //Change usernames etc.
-         java.sql.Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/PHARMASSIST", "root","Pswd");
-         String query = "select did,dname,quantity,price,mfd,exp_date,d.gid,gname from drug d inner join generic g on g.gid =d.gid where dname like concat( ?,'%') or gname=?";
 
-          PreparedStatement pst = con.prepareStatement(query);
-          
-          pst.setString(1,jTextField1.getText());
-          pst.setString(2,jTextField1.getText());
-          
-          if(jTextField1.getText().isEmpty()==false){
-           ResultSet rs = pst.executeQuery();
-           
-            if (rs.isBeforeFirst() ){
-           
-            ResultSetMetaData rsmd = rs.getMetaData();
-            
-            
-            DefaultTableModel model=(DefaultTableModel) jTable2.getModel();
-            
-            int cols = rsmd.getColumnCount();
-            String[] colName = new String[cols]; 
-            for(int i= 0;i<cols;i++)
-                colName[i]=rsmd.getColumnName(i+1);
-            model.setColumnIdentifiers(colName);
-            
-            String a,b,c,d,e,f,g,h;
-            while (rs.next()){
-                  a= rs.getString(1);
-                    b= rs.getString(2);
-                      c= rs.getString(3);
-                        d= rs.getString(4);
-                          e= rs.getString(5);
-                            f= rs.getString(6);
-                              g= rs.getString(7);
-                              h= rs.getString(8);
-               String[] row={a,b,c,d,e,f,g,h};
-               model.addRow(row);
-         
-        }
-           }
-          else{
-           JOptionPane.showMessageDialog( this,"No results found!" );
-           
-           
-           }
-             
-         
-        }}
-        catch(ClassNotFoundException|SQLException ex){
-                System.out.println(ex);
-                
+        jTable2.setModel(new DefaultTableModel());
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            //establishes connection
+            //Change usernames etc.
+            java.sql.Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/PHARMASSIST", "root", "Pswd");
+            String query = "select did,dname,quantity,price,mfd,exp_date,d.gid,gname from drug d inner join generic g on g.gid =d.gid where dname like concat( ?,'%') or gname=?";
+
+            PreparedStatement pst = con.prepareStatement(query);
+
+            pst.setString(1, jTextField1.getText());
+            pst.setString(2, jTextField1.getText());
+
+            if (jTextField1.getText().isEmpty() == false) {
+                ResultSet rs = pst.executeQuery();
+
+                if (rs.isBeforeFirst()) {
+
+                    ResultSetMetaData rsmd = rs.getMetaData();
+
+                    DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
+
+                    int cols = rsmd.getColumnCount();
+                    String[] colName = new String[cols];
+                    for (int i = 0; i < cols; i++) {
+                        colName[i] = rsmd.getColumnName(i + 1);
+                    }
+                    model.setColumnIdentifiers(colName);
+
+                    String a, b, c, d, e, f, g, h;
+                    while (rs.next()) {
+                        a = rs.getString(1);
+                        b = rs.getString(2);
+                        c = rs.getString(3);
+                        d = rs.getString(4);
+                        e = rs.getString(5);
+                        f = rs.getString(6);
+                        g = rs.getString(7);
+                        h = rs.getString(8);
+                        String[] row = {a, b, c, d, e, f, g, h};
+                        model.addRow(row);
+
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "No results found!");
+
                 }
+
+            }
+        } catch (ClassNotFoundException | SQLException ex) {
+            System.out.println(ex);
+
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
@@ -898,7 +826,6 @@ private void updateDrugTable(java.sql.Connection con){
     private javax.swing.JButton add;
     private javax.swing.JButton addToBill;
     private javax.swing.JTextField billID;
-    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton clear;
     private javax.swing.JButton clear2;
     private javax.swing.JTextField customerName;
@@ -934,5 +861,3 @@ private void updateDrugTable(java.sql.Connection con){
     private javax.swing.JTextField unitPrice;
     // End of variables declaration//GEN-END:variables
 }
-
-
