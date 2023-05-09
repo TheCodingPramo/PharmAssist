@@ -12,6 +12,7 @@ public class logged_admin extends javax.swing.JFrame {
     public logged_admin() {
         initComponents();
         this.setExtendedState(MAXIMIZED_BOTH);
+        this.setVisible(true);
     }
 
     /**
