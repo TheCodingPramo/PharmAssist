@@ -1,4 +1,4 @@
- package frames;
+package frames;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -17,26 +17,12 @@ import org.netbeans.lib.awtextra.AbsoluteLayout;
  *
 */
 public class WcScreen extends javax.swing.JFrame {
+    
+    Connection conn =null;
 
     public WcScreen() throws IOException, InterruptedException, SQLException {
         initComponents();
-        customize();
-    }
-    
-    public final void customize() throws InterruptedException{
-        //JFrame
-        this.setExtendedState(MAXIMIZED_BOTH);
-        
-        //localTime
-        localTime.setText(Time.getCurrentTime());
-        while(this.isFocused()){
-            localTime.setText(Time.getCurrentTime());
-            Thread.sleep(200);
-        }
-        
-        //greet
-        greet.setText(Time.getGreeting());
-        
+        conn = DbmsConn.connect();
     }
 
     public JLabel getLocalTime() {
@@ -95,7 +81,7 @@ public class WcScreen extends javax.swing.JFrame {
         localTime.setForeground(new java.awt.Color(255, 255, 255));
         localTime.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         localTime.setText("00:00:00");
-        mainPanel.add(localTime, new org.netbeans.lib.awtextra.AbsoluteConstraints(1140, 700, 230, 90));
+        mainPanel.add(localTime, new org.netbeans.lib.awtextra.AbsoluteConstraints(1120, 680, 230, 90));
 
         loginBtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         loginBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Graphics/login-mouse out.png"))); // NOI18N
@@ -325,9 +311,12 @@ public class WcScreen extends javax.swing.JFrame {
             connt.getConn().close();
             
             if("ADMIN".equals(currentUserType) && currentUserType!=null){
-                System.out.println("adminnnnn");
                 loginPanel.setVisible(false);
-                new logged_admin();
+                new logged_admin().setVisible(true);
+                this.setVisible(false);
+            }else if("CASHIER".equals(currentUserType) && currentUserType!=null){
+                loginPanel.setVisible(false);
+                new Bill().setVisible(true);
             }
             
         }catch(SQLException e){

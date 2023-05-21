@@ -9,9 +9,9 @@ import javax.swing.*;
 public class DbmsConn {
     private Connection conn=null;
     
-    String url="jdbc:mysql://localhost:3306/pharmassistdb"; 
+    String url="jdbc:mysql://localhost:3306/PHARMASSIST"; 
     String username="root";
-    String password="14101";
+    String password="";
 
     public DbmsConn() throws SQLException{
         createDbConnection();
@@ -35,6 +35,20 @@ public class DbmsConn {
     
     public Connection getConn() {
         return conn;
+    }
+    public static Connection connect(){
+        
+        Connection conn = null;
+         try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/PHARMASSIST","root","");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+         
+         
+        return conn;
+        
     }
     
     public static void main(String[] args) throws SQLException {

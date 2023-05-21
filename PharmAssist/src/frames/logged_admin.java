@@ -1,18 +1,50 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ */
 package frames;
+
+import com.mysql.cj.jdbc.DatabaseMetaData;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.ImageIcon;
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import jdk.jfr.consumer.MetadataEvent;
+import net.proteanit.sql.DbUtils;
 
 /**
  *
  * @author Shehan Chamudith
  */
 public class logged_admin extends javax.swing.JFrame {
+    
+    Connection conn = null;
+    PreparedStatement pst = null;
+    ResultSet rs = null;
 
     /**
      * Creates new form logged_admin
      */
     public logged_admin() {
         initComponents();
-        this.setExtendedState(MAXIMIZED_BOTH);
-        this.setVisible(true);
+        
+        conn = DbmsConn.connect();
+        tableload("drug");
+    }
+    
+    public void tableload(String tname) {
+        try {
+            String sql = "select * from " + tname + "";
+            pst = conn.prepareStatement(sql);
+            rs = pst.executeQuery();
+            table1.setModel(DbUtils.resultSetToTableModel(rs));
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
     }
 
     /**
@@ -24,128 +56,26 @@ public class logged_admin extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        background = new javax.swing.JPanel();
-        side_pannel = new javax.swing.JPanel();
-        logo = new javax.swing.JLabel();
-        logo_text = new javax.swing.JLabel();
-        welcome_text = new javax.swing.JLabel();
-        profile = new javax.swing.JLabel();
-        logged_type = new javax.swing.JLabel();
-        database_controls = new javax.swing.JPanel();
-        drop_down = new javax.swing.JComboBox<>();
-        view_tables = new javax.swing.JButton();
-        update_inventory = new javax.swing.JButton();
-        update_employees = new javax.swing.JButton();
-        bill_button = new javax.swing.JPanel();
-        bill = new javax.swing.JButton();
-        table_preview = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tables = new javax.swing.JTable();
+        table1 = new javax.swing.JTable();
+        view_table = new javax.swing.JButton();
+        bill = new javax.swing.JButton();
+        drop_down_menu = new frames.Combobox();
+        addButton = new javax.swing.JButton();
+        modifyButton = new javax.swing.JButton();
+        removeButton = new javax.swing.JButton();
+        close1 = new javax.swing.JButton();
+        background = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Inventory");
-        setSize(new java.awt.Dimension(1366, 768));
+        setUndecorated(true);
+        setResizable(false);
 
-        side_pannel.setBackground(new java.awt.Color(255, 255, 255));
-        side_pannel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel1.setMinimumSize(new java.awt.Dimension(1366, 768));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Graphics/logo1.jpg"))); // NOI18N
-        side_pannel.add(logo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 13, 140, 160));
-
-        logo_text.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Graphics/logo2.jpg"))); // NOI18N
-        side_pannel.add(logo_text, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 90, -1, 78));
-
-        welcome_text.setFont(new java.awt.Font("Segoe UI Black", 1, 50)); // NOI18N
-        welcome_text.setForeground(new java.awt.Color(38, 38, 38));
-        welcome_text.setText("Welcome");
-        side_pannel.add(welcome_text, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 30, 388, 68));
-
-        profile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Graphics/profile1.jpg"))); // NOI18N
-        side_pannel.add(profile, new org.netbeans.lib.awtextra.AbsoluteConstraints(1184, 18, -1, -1));
-
-        logged_type.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
-        logged_type.setText("LOGGED - ADMIN");
-        side_pannel.add(logged_type, new org.netbeans.lib.awtextra.AbsoluteConstraints(1148, 124, 173, 20));
-
-        database_controls.setBackground(new java.awt.Color(0, 102, 102));
-
-        drop_down.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        drop_down.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                drop_downActionPerformed(evt);
-            }
-        });
-
-        view_tables.setText("View Table");
-        view_tables.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                view_tablesActionPerformed(evt);
-            }
-        });
-
-        update_inventory.setText("Update Inventory");
-
-        update_employees.setText("Update Employees");
-
-        javax.swing.GroupLayout database_controlsLayout = new javax.swing.GroupLayout(database_controls);
-        database_controls.setLayout(database_controlsLayout);
-        database_controlsLayout.setHorizontalGroup(
-            database_controlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(database_controlsLayout.createSequentialGroup()
-                .addContainerGap(16, Short.MAX_VALUE)
-                .addGroup(database_controlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(update_employees, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(database_controlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(database_controlsLayout.createSequentialGroup()
-                            .addComponent(drop_down, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(view_tables))
-                        .addComponent(update_inventory, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(23, 23, 23))
-        );
-        database_controlsLayout.setVerticalGroup(
-            database_controlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(database_controlsLayout.createSequentialGroup()
-                .addGap(52, 52, 52)
-                .addGroup(database_controlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(drop_down, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(view_tables))
-                .addGap(28, 28, 28)
-                .addComponent(update_inventory)
-                .addGap(31, 31, 31)
-                .addComponent(update_employees)
-                .addContainerGap(221, Short.MAX_VALUE))
-        );
-
-        bill_button.setBackground(new java.awt.Color(0, 153, 102));
-
-        bill.setText("Bill");
-        bill.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                billActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout bill_buttonLayout = new javax.swing.GroupLayout(bill_button);
-        bill_button.setLayout(bill_buttonLayout);
-        bill_buttonLayout.setHorizontalGroup(
-            bill_buttonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(bill_buttonLayout.createSequentialGroup()
-                .addGap(63, 63, 63)
-                .addComponent(bill, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        bill_buttonLayout.setVerticalGroup(
-            bill_buttonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(bill_buttonLayout.createSequentialGroup()
-                .addGap(47, 47, 47)
-                .addComponent(bill, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(39, Short.MAX_VALUE))
-        );
-
-        table_preview.setBackground(new java.awt.Color(0, 153, 153));
-
-        tables.setModel(new javax.swing.table.DefaultTableModel(
+        table1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -156,75 +86,405 @@ public class logged_admin extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(tables);
+        jScrollPane1.setViewportView(table1);
 
-        javax.swing.GroupLayout table_previewLayout = new javax.swing.GroupLayout(table_preview);
-        table_preview.setLayout(table_previewLayout);
-        table_previewLayout.setHorizontalGroup(
-            table_previewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(table_previewLayout.createSequentialGroup()
-                .addGap(32, 32, 32)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 840, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(159, Short.MAX_VALUE))
-        );
-        table_previewLayout.setVerticalGroup(
-            table_previewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(table_previewLayout.createSequentialGroup()
-                .addGap(50, 50, 50)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 461, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 180, 840, 570));
 
-        javax.swing.GroupLayout backgroundLayout = new javax.swing.GroupLayout(background);
-        background.setLayout(backgroundLayout);
-        backgroundLayout.setHorizontalGroup(
-            backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(side_pannel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(backgroundLayout.createSequentialGroup()
-                .addComponent(table_preview, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(0, 0, 0)
-                .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(bill_button, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(database_controls, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-        );
-        backgroundLayout.setVerticalGroup(
-            backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(backgroundLayout.createSequentialGroup()
-                .addComponent(side_pannel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(backgroundLayout.createSequentialGroup()
-                        .addComponent(database_controls, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, 0)
-                        .addComponent(bill_button, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(table_preview, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-        );
+        view_table.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Graphics/table.png"))); // NOI18N
+        view_table.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                view_tableMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                view_tableMouseExited(evt);
+            }
+        });
+        view_table.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                view_tableActionPerformed(evt);
+            }
+        });
+        jPanel1.add(view_table, new org.netbeans.lib.awtextra.AbsoluteConstraints(1140, 210, 170, 70));
+        view_table.setOpaque(false);
+        view_table.setContentAreaFilled(false);
+        view_table.setBorderPainted(false);
+
+        bill.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Graphics/bill.png"))); // NOI18N
+        bill.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                billMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                billMouseExited(evt);
+            }
+        });
+        bill.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                billActionPerformed(evt);
+            }
+        });
+        jPanel1.add(bill, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 580, 250, 150));
+        bill.setOpaque(false);
+        bill.setContentAreaFilled(false);
+        bill.setBorderPainted(false);
+
+        drop_down_menu.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Select Table", "Drug", "Generic", "Customer", "Employee", "Supplier", "Supply_Details", "Bill", "Drug_Order", "Pres_Order" }));
+        drop_down_menu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                drop_down_menuActionPerformed(evt);
+            }
+        });
+        jPanel1.add(drop_down_menu, new org.netbeans.lib.awtextra.AbsoluteConstraints(970, 220, 160, -1));
+
+        addButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Graphics/add.png"))); // NOI18N
+        addButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                addButtonMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                addButtonMouseExited(evt);
+            }
+        });
+        addButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addButtonActionPerformed(evt);
+            }
+        });
+        jPanel1.add(addButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 300, -1, 80));
+        addButton.setOpaque(false);
+        addButton.setContentAreaFilled(false);
+        addButton.setBorderPainted(false);
+
+        modifyButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Graphics/export.png"))); // NOI18N
+        modifyButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                modifyButtonMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                modifyButtonMouseExited(evt);
+            }
+        });
+        modifyButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                modifyButtonActionPerformed(evt);
+            }
+        });
+        jPanel1.add(modifyButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 382, -1, 80));
+        modifyButton.setOpaque(false);
+        modifyButton.setContentAreaFilled(false);
+        modifyButton.setBorderPainted(false);
+
+        removeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Graphics/remove.png"))); // NOI18N
+        removeButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                removeButtonMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                removeButtonMouseExited(evt);
+            }
+        });
+        removeButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeButtonActionPerformed(evt);
+            }
+        });
+        jPanel1.add(removeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 472, -1, 80));
+        removeButton.setOpaque(false);
+        removeButton.setContentAreaFilled(false);
+        removeButton.setBorderPainted(false);
+
+        close1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Graphics/close.png"))); // NOI18N
+        close1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                close1MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                close1MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                close1MouseExited(evt);
+            }
+        });
+        close1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                close1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(close1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1310, 0, 50, 50));
+        close1.setOpaque(false);
+        close1.setContentAreaFilled(false);
+        close1.setBorderPainted(false);
+
+        background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Graphics/background.jpg"))); // NOI18N
+        jPanel1.add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -20, -1, 810));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(background, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(background, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 768, Short.MAX_VALUE)
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void drop_downActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_drop_downActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_drop_downActionPerformed
-
-    private void view_tablesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_view_tablesActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_view_tablesActionPerformed
-
     private void billActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_billActionPerformed
-        // TODO add your handling code here:
+        Bill billing = new Bill();
+        billing.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_billActionPerformed
+
+    private void billMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_billMouseEntered
+        bill.setIcon(new ImageIcon(getClass().getResource("/Graphics/bill 1.png")));
+    }//GEN-LAST:event_billMouseEntered
+
+    private void billMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_billMouseExited
+        bill.setIcon(new ImageIcon(getClass().getResource("/Graphics/bill.png")));
+    }//GEN-LAST:event_billMouseExited
+
+    private void view_tableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_view_tableActionPerformed
+        String tables;
+        tables = drop_down_menu.getSelectedItem().toString();
+        
+        if (tables == "Select Table") {
+            JOptionPane.showOptionDialog(
+                    null, // parent component
+                    "Please Select a Table !!",
+                    "Message",
+                    JOptionPane.DEFAULT_OPTION,
+                    JOptionPane.INFORMATION_MESSAGE,
+                    null,
+                    null,
+                    null
+            );
+        } else if (tables == "Drug") {
+            try {
+                String sql = "select * from " + tables;
+                pst = conn.prepareStatement(sql);
+                rs = pst.executeQuery();
+                table1.setModel(DbUtils.resultSetToTableModel(rs));
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
+        } else if (tables == "Generic") {
+            try {
+                String sql = "select * from " + tables;
+                pst = conn.prepareStatement(sql);
+                rs = pst.executeQuery();
+                table1.setModel(DbUtils.resultSetToTableModel(rs));
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
+        } else if (tables == "Employee") {
+            try {
+                String sql = "select * from " + tables;
+                pst = conn.prepareStatement(sql);
+                rs = pst.executeQuery();
+                table1.setModel(DbUtils.resultSetToTableModel(rs));
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
+        } else if (tables == "Customer") {
+            try {
+                String sql = "select * from " + tables;
+                pst = conn.prepareStatement(sql);
+                rs = pst.executeQuery();
+                table1.setModel(DbUtils.resultSetToTableModel(rs));
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
+        } else if (tables == "Supplier") {
+            try {
+                String sql = "select * from " + tables;
+                pst = conn.prepareStatement(sql);
+                rs = pst.executeQuery();
+                table1.setModel(DbUtils.resultSetToTableModel(rs));
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
+        } else if (tables == "Supply_Details") {
+            try {
+                String sql = "select * from " + tables;
+                pst = conn.prepareStatement(sql);
+                rs = pst.executeQuery();
+                table1.setModel(DbUtils.resultSetToTableModel(rs));
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
+        } else if (tables == "Bill") {
+            try {
+                String sql = "select * from " + tables;
+                pst = conn.prepareStatement(sql);
+                rs = pst.executeQuery();
+                table1.setModel(DbUtils.resultSetToTableModel(rs));
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
+        } else if (tables == "Pres_Order") {
+            try {
+                String sql = "select * from " + tables;
+                pst = conn.prepareStatement(sql);
+                rs = pst.executeQuery();
+                table1.setModel(DbUtils.resultSetToTableModel(rs));
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
+        } else if (tables == "Drug_Order") {
+            try {
+                String sql = "select * from " + tables;
+                pst = conn.prepareStatement(sql);
+                rs = pst.executeQuery();
+                table1.setModel(DbUtils.resultSetToTableModel(rs));
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
+        }
+    }//GEN-LAST:event_view_tableActionPerformed
+
+    private void view_tableMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_view_tableMouseExited
+        view_table.setIcon(new ImageIcon(getClass().getResource("/Graphics/table.png")));
+    }//GEN-LAST:event_view_tableMouseExited
+
+    private void view_tableMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_view_tableMouseEntered
+        view_table.setIcon(new ImageIcon(getClass().getResource("/Graphics/table 1.png")));
+    }//GEN-LAST:event_view_tableMouseEntered
+
+    private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
+        AddingForm adf = new AddingForm();
+        adf.addCustomize();
+        adf.setVisible(true);
+        
+    }//GEN-LAST:event_addButtonActionPerformed
+
+    private void addButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addButtonMouseEntered
+        addButton.setIcon(new ImageIcon(getClass().getResource("/Graphics/add1.png")));
+    }//GEN-LAST:event_addButtonMouseEntered
+
+    private void addButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addButtonMouseExited
+        addButton.setIcon(new ImageIcon(getClass().getResource("/Graphics/add.png")));
+    }//GEN-LAST:event_addButtonMouseExited
+
+    private void modifyButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_modifyButtonMouseEntered
+        modifyButton.setIcon(new ImageIcon(getClass().getResource("/Graphics/export1.png")));
+    }//GEN-LAST:event_modifyButtonMouseEntered
+
+    private void modifyButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_modifyButtonMouseExited
+        modifyButton.setIcon(new ImageIcon(getClass().getResource("/Graphics/export.png")));
+    }//GEN-LAST:event_modifyButtonMouseExited
+
+    private void removeButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_removeButtonMouseEntered
+        removeButton.setIcon(new ImageIcon(getClass().getResource("/Graphics/remove1.png")));
+    }//GEN-LAST:event_removeButtonMouseEntered
+
+    private void removeButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_removeButtonMouseExited
+        removeButton.setIcon(new ImageIcon(getClass().getResource("/Graphics/remove.png")));
+    }//GEN-LAST:event_removeButtonMouseExited
+
+    private void removeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeButtonActionPerformed
+        
+        int r = table1.getSelectedRow();
+        if (r == -1) {
+            JOptionPane.showMessageDialog(rootPane, "No row is selected !! Please select a row !!");
+        } else {
+            int check = JOptionPane.showConfirmDialog(rootPane, "Do you want to delete this record ? ");
+            if (check == 0 && r != -1) {
+                String tables = drop_down_menu.getSelectedItem().toString();
+                
+                String id = (String) table1.getValueAt(r, 0);
+                
+                String idColumn = null;
+                String tt = null;
+                switch (tables) {
+                    case "Drug":
+                        idColumn = "did";
+                        tt = "drug";
+                        break;
+                    case "Generic":
+                        idColumn = "gid";
+                        tt = "generic";
+                        break;
+                    case "Employee":
+                        idColumn = "eid";
+                        tt = "employee";
+                        break;
+                    case "Customer":
+                        idColumn = "cid";
+                        tt = "customer";
+                        break;
+                    case "Supplier":
+                        idColumn = "sid";
+                        tt = "supplier";
+                        break;
+                    case "Supply_Details":
+                        idColumn = "sid";
+                        tt = "supply_details";
+                        break;
+                    case "Bill":
+                        idColumn = "bid";
+                        tt = "bill";
+                        break;
+                    case "Pres_Order":
+                        idColumn = "oid";
+                        tt = "pres_order";
+                        break;
+                    case "Drug_Order":
+                        idColumn = "oid";
+                        tt = "drug_order";
+                        break;
+                }
+                try {
+                    
+                    String sql = "DELETE FROM " + tables + " WHERE " + idColumn + "='" + id + "'";
+                    pst = conn.prepareStatement(sql);
+                    int rowsAffected = pst.executeUpdate();
+                    
+                    if (rowsAffected > 0) {
+                        JOptionPane.showMessageDialog(rootPane, "Record Deleted !!");
+                        tableload(tt);
+                    } else {
+                        JOptionPane.showMessageDialog(rootPane, "Record not found or not deleted.");
+                    }
+                } catch (SQLException e) {
+                    JOptionPane.showMessageDialog(null, e);
+                }
+                
+            }
+        }
+        
+
+    }//GEN-LAST:event_removeButtonActionPerformed
+
+    private void close1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_close1ActionPerformed
+        this.dispose();
+        
+    }//GEN-LAST:event_close1ActionPerformed
+
+    private void close1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_close1MouseEntered
+        close1.setIcon(new ImageIcon(getClass().getResource("/Graphics/close 1.png")));
+    }//GEN-LAST:event_close1MouseEntered
+
+    private void close1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_close1MouseExited
+        close1.setIcon(new ImageIcon(getClass().getResource("/Graphics/close.png")));
+    }//GEN-LAST:event_close1MouseExited
+
+    private void close1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_close1MouseClicked
+        this.dispose();
+    }//GEN-LAST:event_close1MouseClicked
+
+    private void modifyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modifyButtonActionPerformed
+        AddingForm adf = new AddingForm();
+        adf.modifyCustomize();
+        adf.setVisible(true);
+    }//GEN-LAST:event_modifyButtonActionPerformed
+
+    private void drop_down_menuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_drop_down_menuActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_drop_down_menuActionPerformed
 
     /**
      * @param args the command line arguments
@@ -255,29 +515,32 @@ public class logged_admin extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new logged_admin().setVisible(true);
             }
         });
     }
+    
+    public String getSelectedValue (){
+        return (String) drop_down_menu.getSelectedItem();
+    }
+    
+    public JComboBox getDrop_down_menu(){
+        return drop_down_menu;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel background;
+    private javax.swing.JButton addButton;
+    private javax.swing.JLabel background;
     private javax.swing.JButton bill;
-    private javax.swing.JPanel bill_button;
-    private javax.swing.JPanel database_controls;
-    private javax.swing.JComboBox<String> drop_down;
+    private javax.swing.JButton close1;
+    protected static frames.Combobox drop_down_menu;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel logged_type;
-    private javax.swing.JLabel logo;
-    private javax.swing.JLabel logo_text;
-    private javax.swing.JLabel profile;
-    private javax.swing.JPanel side_pannel;
-    private javax.swing.JPanel table_preview;
-    private javax.swing.JTable tables;
-    private javax.swing.JButton update_employees;
-    private javax.swing.JButton update_inventory;
-    private javax.swing.JButton view_tables;
-    private javax.swing.JLabel welcome_text;
+    private javax.swing.JButton modifyButton;
+    private javax.swing.JButton removeButton;
+    protected static javax.swing.JTable table1;
+    private javax.swing.JButton view_table;
     // End of variables declaration//GEN-END:variables
 }
