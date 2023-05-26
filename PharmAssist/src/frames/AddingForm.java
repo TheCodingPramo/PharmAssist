@@ -31,6 +31,7 @@ public class AddingForm extends javax.swing.JFrame {
     ResultSet rs = null;
 
     public AddingForm() {
+        this.fullTextArray = new JTextField[]{t1, t2, t3, t4, t5, t6, t7};
         initComponents();
 
     }
@@ -186,7 +187,7 @@ public class AddingForm extends javax.swing.JFrame {
     private void clActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clActionPerformed
         // TODO add your handling code here:
         this.dispose();
-    
+
 
     }//GEN-LAST:event_clActionPerformed
 
@@ -260,12 +261,18 @@ public class AddingForm extends javax.swing.JFrame {
         });
     }
 
+    static TableModel model;
+    JLabel[] labelArray;
+    int cct;
+    JTextField[] fullTextArray;
+
     protected void addCustomize() {
-        TableModel model = logged_admin.table1.getModel();;
-        int selectedRowIndex = logged_admin.table1.getSelectedRow();
-        int cct = logged_admin.table1.getColumnCount();
+        model = logged_admin.table1.getModel();
+        cct = logged_admin.table1.getColumnCount();
+        int rest = 7 - cct;
         JLabel[] fulllabelArray = {l1, l2, l3, l4, l5, l6, l7};
-        JLabel[] labelArray = new JLabel[cct];
+//        JTextField[] fullTextArray={t1, t2, t3, t4, t5, t6, t7};
+        labelArray = new JLabel[cct];
         String[] THArray = new String[cct];
 
         for (int i = 0; i < cct; i++) {
@@ -278,9 +285,15 @@ public class AddingForm extends javax.swing.JFrame {
             labelArray[i].setText(THArray[i].toString());
 
         }
+
+        while (rest > 0) {
+            fulllabelArray[7 - rest].setText("");
+            fullTextArray[7 - rest].setVisible(false);
+            rest--;
+        }
     }
 
-    private void writeToDB(String sql){
+    private void writeToDB(String sql) {
         conn = DbmsConn.connect();
         String value1 = t1.getText();
         String value2 = t2.getText();
@@ -291,11 +304,11 @@ public class AddingForm extends javax.swing.JFrame {
         String value7 = t7.getText();
 
         String[] stringAry = {value1, value2, value3, value4, value5, value6, value7};
-        
-        String placeHolders="?";
-        String qm=",?";
-        for(int i=1; i<logged_admin.table1.getColumnCount(); i++){
-            placeHolders=placeHolders+qm;
+
+        String placeHolders = "?";
+        String qm = ",?";
+        for (int i = 1; i < logged_admin.table1.getColumnCount(); i++) {
+            placeHolders = placeHolders + qm;
         }
 
         String sql1 = sql; //"INSERT INTO " + logged_admin.drop_down_menu.getSelectedItem().toString() + " VALUES ("+placeHolders+")";
@@ -303,7 +316,7 @@ public class AddingForm extends javax.swing.JFrame {
             pst = conn.prepareStatement(sql);
 
             for (int i = 0; i < logged_admin.table1.getColumnCount(); i++) {
-                pst.setString(i+1, stringAry[i].toString());
+                pst.setString(i + 1, stringAry[i].toString());
             }
 
             pst.execute();
@@ -315,13 +328,13 @@ public class AddingForm extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(AddingForm.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, "Error!");
-        } catch (Exception e){
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Invalid Data Error!");
         }
     }
-    
+
     protected void modifyCustomize() {
-        TableModel model;
+        model = logged_admin.table1.getModel();;
         int selectedRowIndex = logged_admin.table1.getSelectedRow();
         int cct = logged_admin.table1.getColumnCount();
         int rest = 7 - cct;
@@ -329,10 +342,17 @@ public class AddingForm extends javax.swing.JFrame {
         JTextField[] fullTextArray = {t1, t2, t3, t4, t5, t6, t7};
         JLabel[] labelArray = new JLabel[cct];
         JTextField[] textArray = new JTextField[cct];
+        String[] THArray = new String[cct];
 
         for (int i = 0; i < cct; i++) {
             labelArray[i] = fulllabelArray[i];
+            THArray[i] = model.getColumnName(i).toString();
+        }
+
+        for (int i = 0; i < cct; i++) {
+
             textArray[i] = fullTextArray[i];
+            labelArray[i].setText(THArray[i].toString());
         }
 
         for (int i = 0; i < cct; i++) {

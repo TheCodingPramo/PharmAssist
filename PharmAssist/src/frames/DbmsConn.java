@@ -42,6 +42,7 @@ public class DbmsConn {
          try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/PHARMASSIST","root","");
+            System.out.println("Successfully connected to the database!");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
         }

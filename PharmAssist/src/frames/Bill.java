@@ -47,9 +47,9 @@ public class Bill extends javax.swing.JFrame {
     public Bill() {
         initComponents();
         //billHeader();
-        unitPrice.setEditable(false);
-        billID.setEditable(false);
-        billID.setText("0001");
+        
+        
+        billIDset();
         BillArea.setEditable(false);
         //this.setResizable(false);
 
@@ -131,10 +131,10 @@ public class Bill extends javax.swing.JFrame {
         jTextArea2 = new javax.swing.JTextArea();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        billID = new javax.swing.JTextField();
-        select = new javax.swing.JTextField();
+        BillID = new javax.swing.JLabel();
+        unitPrice = new javax.swing.JLabel();
+        select = new javax.swing.JLabel();
         qty = new javax.swing.JTextField();
-        unitPrice = new javax.swing.JTextField();
         customerName = new javax.swing.JTextField();
         TelNo = new javax.swing.JTextField();
         SearchTF = new javax.swing.JTextField();
@@ -149,7 +149,7 @@ public class Bill extends javax.swing.JFrame {
         tablebill = new javax.swing.JTable();
         jScrollPane3 = new javax.swing.JScrollPane();
         ResultTable = new javax.swing.JTable();
-        jLabel9 = new javax.swing.JLabel();
+        billID = new javax.swing.JLabel();
         jScrollPane5 = new javax.swing.JScrollPane();
         BillArea = new javax.swing.JTextArea();
         totall = new javax.swing.JLabel();
@@ -159,8 +159,9 @@ public class Bill extends javax.swing.JFrame {
         balance = new javax.swing.JLabel();
         Bal = new javax.swing.JLabel();
         pay = new javax.swing.JButton();
-        b7 = new javax.swing.JButton();
         billclose = new javax.swing.JButton();
+        pbill = new javax.swing.JButton();
+        cbill = new javax.swing.JButton();
 
         jCheckBox1.setText("jCheckBox1");
 
@@ -207,24 +208,15 @@ public class Bill extends javax.swing.JFrame {
         jPanel2.setPreferredSize(new java.awt.Dimension(1393, 692));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        billID.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                billIDActionPerformed(evt);
-            }
-        });
-        jPanel2.add(billID, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 90, 340, -1));
+        BillID.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        BillID.setToolTipText("");
+        jPanel2.add(BillID, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 100, 80, 30));
 
-        select.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                selectActionPerformed(evt);
-            }
-        });
-        select.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                selectKeyTyped(evt);
-            }
-        });
-        jPanel2.add(select, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 170, 340, -1));
+        unitPrice.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jPanel2.add(unitPrice, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 320, 130, 30));
+
+        select.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jPanel2.add(select, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 170, 390, 30));
 
         qty.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -236,8 +228,7 @@ public class Bill extends javax.swing.JFrame {
                 qtyKeyPressed(evt);
             }
         });
-        jPanel2.add(qty, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 240, 340, -1));
-        jPanel2.add(unitPrice, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 320, 340, -1));
+        jPanel2.add(qty, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 240, 120, -1));
 
         customerName.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -407,10 +398,10 @@ public class Bill extends javax.swing.JFrame {
 
         jPanel2.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 100, 460, 270));
 
-        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Graphics/bill window.jpg"))); // NOI18N
-        jLabel9.setMaximumSize(new java.awt.Dimension(1366, 768));
-        jLabel9.setMinimumSize(new java.awt.Dimension(1366, 768));
-        jPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1370, 770));
+        billID.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Graphics/bill window.jpg"))); // NOI18N
+        billID.setMaximumSize(new java.awt.Dimension(1366, 768));
+        billID.setMinimumSize(new java.awt.Dimension(1366, 768));
+        jPanel2.add(billID, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1370, 770));
 
         BillArea.setColumns(20);
         BillArea.setRows(5);
@@ -433,22 +424,6 @@ public class Bill extends javax.swing.JFrame {
             }
         });
 
-        b7.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        b7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Graphics/bill_1.png"))); // NOI18N
-        b7.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                b7MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                b7MouseExited(evt);
-            }
-        });
-        b7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                b7ActionPerformed(evt);
-            }
-        });
-
         billclose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Graphics/close.png"))); // NOI18N
         billclose.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -461,6 +436,20 @@ public class Bill extends javax.swing.JFrame {
         billclose.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 billcloseActionPerformed(evt);
+            }
+        });
+
+        pbill.setText("Print Bill");
+        pbill.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pbillActionPerformed(evt);
+            }
+        });
+
+        cbill.setText("Clear Bill");
+        cbill.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbillActionPerformed(evt);
             }
         });
 
@@ -494,14 +483,16 @@ public class Bill extends javax.swing.JFrame {
                                 .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(billclose)
                                 .addGap(16, 16, 16))))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(115, 115, 115)
-                        .addComponent(b7)
-                        .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
                         .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(28, 28, 28))))
+                        .addGap(28, 28, 28))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(103, 103, 103)
+                        .addComponent(pbill)
+                        .addGap(78, 78, 78)
+                        .addComponent(cbill)
+                        .addContainerGap())))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -525,15 +516,17 @@ public class Bill extends javax.swing.JFrame {
                     .addComponent(balance, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
                     .addComponent(Bal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 389, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(50, 50, 50)
-                .addComponent(b7)
-                .addGap(79, 79, 79))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 389, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(201, 201, 201))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(cbill)
+                            .addComponent(pbill))
+                        .addGap(109, 109, 109))))
         );
 
-        b7.setOpaque(false);
-        b7.setContentAreaFilled(false);
-        b7.setBorderPainted(false);
         billclose.setOpaque(false);
         billclose.setContentAreaFilled(false);
         billclose.setBorderPainted(false);
@@ -543,68 +536,46 @@ public class Bill extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void b7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b7ActionPerformed
-        TableModel model = tablebill.getModel();
-        if (model.getRowCount() == 0) {
-           
-            JOptionPane.showMessageDialog(null, "The Bill is empty !!!");
-        }else{
-           bill_print();
-       }
-        
-//        try {
-//            BillArea.print();
-//        } catch (Exception e) {
-//
-//        }
-
-
-    
-
-
-    }//GEN-LAST:event_b7ActionPerformed
-
+ 
     private void b4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b4ActionPerformed
 
-        TableModel model = tablebill.getModel();
-        if (model.getRowCount() == 0) {
-           
-            JOptionPane.showMessageDialog(null, "The Bill is empty !! \nGenereate the bill first to add customer details !!");
-        }else{
         
-        
-        String cname = customerName.getText();
+        if (ButtonClicked) {
+           String cname = customerName.getText();
         String tel = TelNo.getText();
 
-        if (tel.isEmpty() == false && cname.isEmpty() == false) {
+                    if (tel.isEmpty() == false && cname.isEmpty() == false) {
 
-            if (tel.length() == 10) {
+                        if (tel.length() == 10) {
 
-                BillArea.setText(BillArea.getText() + "\n" + "Customer Name:" + "  " + customerName.getText() + "\t");
-                BillArea.setText(BillArea.getText() + "       Tel no:" + "  " + TelNo.getText() + "\n\n");
-                customerName.setText("");
-                TelNo.setText("");
+                            BillArea.setText(BillArea.getText() + "\n" + "Customer Name:" + "  " + customerName.getText() + "\t");
+                            BillArea.setText(BillArea.getText() + "       Tel no:" + "  " + TelNo.getText() + "\n\n");
+                                try {
+                                    writeCustomerToDB();
+                                } catch (SQLException ex) {
+                                    Logger.getLogger(Bill.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            customerName.setText("");
+                            TelNo.setText("");
 
-            } else {
+                        } else {
 
-                JOptionPane.showMessageDialog(this, "Invalid telephone number");
+                            JOptionPane.showMessageDialog(this, "Invalid telephone number");
 
-            }
-        } else {
-            if (cname.isEmpty() == true && tel.isEmpty() == false) {
-                if (tel.length() != 10) {
-                    JOptionPane.showMessageDialog(this, "Invalid telephone number");
-                }
+                        }
+                    } else {
+                        if (cname.isEmpty() == true && tel.isEmpty() == false) {
+                            if (tel.length() != 10) {
+                                JOptionPane.showMessageDialog(this, "Invalid telephone number");
+                            }
 
-            }
-        }
+                        }
+                    }
+   
+        }else{
         
-        try {
-            writeCustomerToDB();
-        } catch (SQLException ex) {
-            Logger.getLogger(Bill.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        JOptionPane.showMessageDialog(null, "The Bill is empty !! \nGenereate the bill first to add customer details !!");
+        
         }
     }//GEN-LAST:event_b4ActionPerformed
 
@@ -617,13 +588,14 @@ public class Bill extends javax.swing.JFrame {
     private void TelNoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TelNoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_TelNoActionPerformed
-    
-    
-    private void b2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b2ActionPerformed
-        
-        String value1 = select.getText();
-        String value2 = qty.getText();
-        String value3 = unitPrice.getText();
+    private void addtotable(){
+        String value1 = null;
+        String value2 = null;
+        String value3 = null;
+   
+        value1 = select.getText();
+        value2 = qty.getText();
+        value3 = unitPrice.getText();
         
         String column1Value = select.getText();
         String column2Value = qty.getText();
@@ -636,8 +608,13 @@ public class Bill extends javax.swing.JFrame {
         double column4Value = result;
 
         addRowToTable(column1Value, column2Value, column3Value, column4Value);
+    }
+    
+    private void b2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b2ActionPerformed
         
-        cart_cal();
+        //addtotable();
+        
+        //cart_cal();
         
          //BillArea.setText(BillArea.getText()+"\t"+select.getText()+"\t"+qty.getText()+"\t"+unitPrice.getText()+"\n");
         try {
@@ -674,7 +651,8 @@ public class Bill extends javax.swing.JFrame {
                     if (rs2.next()) {
                         if (Integer.parseInt(rs2.getString(1)) > 0) {
                             if (Integer.parseInt(rs2.getString(1)) > 180) {
-
+                                addtotable();
+                                cart_cal();
                                 //printTextArea();
                             //    updateTotal(total); 
                                updateDrugTable(con);
@@ -685,7 +663,8 @@ public class Bill extends javax.swing.JFrame {
 
                                 int resp = JOptionPane.showConfirmDialog(this, "Only " + rs2.getString(1) + " days left till  expiration.Do you wish to proceed?", "Warning!", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
                                 if (resp == JOptionPane.OK_OPTION) {
-
+                                    addtotable();
+                                    cart_cal();
                                     //printTextArea();
                                   //   updateTotal(total);
                                     updateDrugTable(con);
@@ -750,18 +729,6 @@ public class Bill extends javax.swing.JFrame {
         billID.setText("");
         clearDrugInfo();
     }//GEN-LAST:event_b1ActionPerformed
-
-    private void selectKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_selectKeyTyped
-        // TODO add your handling code here:
-    }//GEN-LAST:event_selectKeyTyped
-
-    private void selectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_selectActionPerformed
-
-    private void billIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_billIDActionPerformed
-
-    }//GEN-LAST:event_billIDActionPerformed
 
     private void SearchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchButtonActionPerformed
         // TODO add your handling code here:
@@ -935,14 +902,6 @@ public class Bill extends javax.swing.JFrame {
         b4.setIcon(new ImageIcon(getClass().getResource("/Graphics/add_1.png")));
     }//GEN-LAST:event_b4MouseExited
 
-    private void b7MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_b7MouseEntered
-        b7.setIcon(new ImageIcon(getClass().getResource("/Graphics/bill2.png")));
-    }//GEN-LAST:event_b7MouseEntered
-
-    private void b7MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_b7MouseExited
-        b7.setIcon(new ImageIcon(getClass().getResource("/Graphics/bill_1.png")));
-    }//GEN-LAST:event_b7MouseExited
-
     private void billcloseMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_billcloseMouseEntered
         billclose.setIcon(new ImageIcon(getClass().getResource("/Graphics/close 1.png")));
     }//GEN-LAST:event_billcloseMouseEntered
@@ -950,7 +909,8 @@ public class Bill extends javax.swing.JFrame {
     private void billcloseMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_billcloseMouseExited
         billclose.setIcon(new ImageIcon(getClass().getResource("/Graphics/close.png")));
     }//GEN-LAST:event_billcloseMouseExited
-
+    
+    boolean ButtonClicked = false;
     private void payActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_payActionPerformed
         
         if(Cash.getText().isEmpty()){
@@ -962,6 +922,33 @@ public class Bill extends javax.swing.JFrame {
             
             DecimalFormat df = new DecimalFormat("00.00");
             Bal.setText(String.valueOf(df.format(bal)));
+            
+ 
+               Connection conn = DbmsConn.connect();
+
+                        try {
+                            String sql = "INSERT INTO bill (PAYMENT_METHOD, TOTAL, CASH_GIVEN, BALANCE) VALUES ('CASH', ?, ?, ?)";
+                            PreparedStatement pst = conn.prepareStatement(sql);
+                            pst.setString(1, Too.getText());
+                            pst.setString(2, Cash.getText());
+                            pst.setString(3, Bal.getText());
+                            pst.executeUpdate();
+                            System.out.println("Bill sent to the Database succefully !!");
+                        } catch (SQLException ex) {
+                            Logger.getLogger(Bill.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+            
+            
+        TableModel model = tablebill.getModel();
+        if (model.getRowCount() == 0) {
+           
+            JOptionPane.showMessageDialog(null, "The Bill is empty !!!");
+        }else{
+           ButtonClicked = true;
+           bill_print();
+       }
+        Cash.setText("");
+            
         }
         
         
@@ -983,26 +970,38 @@ public class Bill extends javax.swing.JFrame {
                 cart_cal();
     }//GEN-LAST:event_remove_itemActionPerformed
 
+    private void pbillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pbillActionPerformed
+        try {
+            BillArea.print();
+        } catch (Exception e) {
+
+        }
+    }//GEN-LAST:event_pbillActionPerformed
+
+    private void cbillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbillActionPerformed
+        int check = JOptionPane.showConfirmDialog(rootPane, "Do you really want to Clear the Bill ?");
+        DefaultTableModel model = (DefaultTableModel) tablebill.getModel();
+        if(check==0){
+          BillArea.setText("");  
+          model.setRowCount(0);
+        }
+        
+    }//GEN-LAST:event_cbillActionPerformed
+
     private void writeCustomerToDB() throws SQLException {
         
-        try {
-        Connection conn = null;
-        PreparedStatement pst = null;
-        conn = (Connection) DbmsConn.connect();
-        String sql = "INSERT INTO customer VALUES (?,?,?)";
-            pst = conn.prepareStatement(sql);
-            pst.setString(1, "CM010");
-            pst.setString(2, customerName.getText().toString());
-            pst.setString(3, TelNo.getText().toString());
-            
-            pst.execute();
-            
-            conn.close();
-            
-            JOptionPane.showMessageDialog(null, "Done Successfully!");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        Connection conn = DbmsConn.connect();
+
+                        try {
+                            String sql = "INSERT INTO customer (CNAME, PHONE) VALUES (?, ?)";
+                            PreparedStatement pst = conn.prepareStatement(sql);
+                            pst.setString(1, customerName.getText());
+                            pst.setString(2, TelNo.getText());
+                            pst.executeUpdate();
+                            System.out.println("Customer details sent to the Database succefully !!");
+                        } catch (SQLException ex) {
+                            Logger.getLogger(Bill.class.getName()).log(Level.SEVERE, null, ex);
+                        }
 
     }
     
@@ -1063,6 +1062,30 @@ public void bill_print(){
   
  }
 
+ 
+ public void billIDset(){
+     Connection conn = DbmsConn.connect();
+try {
+    // Retrieve the current maximum bill ID
+    String maxIdQuery = "SELECT MAX(bid) FROM bill";
+    PreparedStatement maxIdStmt = conn.prepareStatement(maxIdQuery);
+    ResultSet maxIdResult = maxIdStmt.executeQuery();
+    
+    int currentMaxId = 0;
+    if (maxIdResult.next()) {
+        currentMaxId = maxIdResult.getInt(1);
+    }
+    
+    // Calculate the next bill ID
+    int nextBillId = currentMaxId + 1;
+    
+    // Display the next bill ID on a JLabel
+    BillID.setText("  " + nextBillId);
+} catch (SQLException ex) {
+    Logger.getLogger(Bill.class.getName()).log(Level.SEVERE, null, ex);
+}
+
+ }
     /**
      * @param args the command line arguments
      */
@@ -1101,6 +1124,7 @@ public void bill_print(){
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Bal;
     private javax.swing.JTextArea BillArea;
+    private javax.swing.JLabel BillID;
     private javax.swing.JTextField Cash;
     private javax.swing.JTable ResultTable;
     private javax.swing.JButton SearchButton;
@@ -1111,17 +1135,16 @@ public void bill_print(){
     private javax.swing.JButton b2;
     private javax.swing.JButton b3;
     private javax.swing.JButton b4;
-    private javax.swing.JButton b7;
     private javax.swing.JLabel balance;
-    private javax.swing.JTextField billID;
+    private javax.swing.JLabel billID;
     private javax.swing.JScrollPane bill_table;
     private javax.swing.JButton billclose;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JLabel cashh;
+    private javax.swing.JButton cbill;
     private javax.swing.JButton clear_search;
     private javax.swing.JTextField customerName;
     private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JList<String> jList1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -1133,11 +1156,12 @@ public void bill_print(){
     private javax.swing.JTable jTable1;
     private javax.swing.JTextArea jTextArea2;
     private javax.swing.JButton pay;
+    private javax.swing.JButton pbill;
     private javax.swing.JTextField qty;
     private javax.swing.JButton remove_item;
-    private javax.swing.JTextField select;
+    private javax.swing.JLabel select;
     private javax.swing.JTable tablebill;
     private javax.swing.JLabel totall;
-    private javax.swing.JTextField unitPrice;
+    private javax.swing.JLabel unitPrice;
     // End of variables declaration//GEN-END:variables
 }

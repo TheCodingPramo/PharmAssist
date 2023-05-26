@@ -9,6 +9,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
@@ -21,7 +23,7 @@ import net.proteanit.sql.DbUtils;
  * @author Shehan Chamudith
  */
 public class logged_admin extends javax.swing.JFrame {
-    
+
     Connection conn = null;
     PreparedStatement pst = null;
     ResultSet rs = null;
@@ -31,11 +33,11 @@ public class logged_admin extends javax.swing.JFrame {
      */
     public logged_admin() {
         initComponents();
-        
+
         conn = DbmsConn.connect();
         tableload("drug");
     }
-    
+
     public void tableload(String tname) {
         try {
             String sql = "select * from " + tname + "";
@@ -250,7 +252,7 @@ public class logged_admin extends javax.swing.JFrame {
     private void view_tableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_view_tableActionPerformed
         String tables;
         tables = drop_down_menu.getSelectedItem().toString();
-        
+
         if (tables == "Select Table") {
             JOptionPane.showOptionDialog(
                     null, // parent component
@@ -354,11 +356,28 @@ public class logged_admin extends javax.swing.JFrame {
         view_table.setIcon(new ImageIcon(getClass().getResource("/Graphics/table 1.png")));
     }//GEN-LAST:event_view_tableMouseEntered
 
+    AddingForm adf=null;
+    
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
-        AddingForm adf = new AddingForm();
+        adf = new AddingForm();
         adf.addCustomize();
         adf.setVisible(true);
         
+        Connection conn=DbmsConn.connect();
+        String sql="INSERT INTO ? VALUES ( ";
+        for (int i = 0; i < adf.cct; i++) {
+            sql=sql+" ?,";
+        }
+        sql=sql+ ");";
+        try {
+            PreparedStatement pst=conn.prepareStatement(sql);
+            pst.setString(1, (String)drop_down_menu.getSelectedItem());
+            for (int i = 0; i < adf.cct; i++) {
+                pst.setString(i, adf.labelArray[i].toString());
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(logged_admin.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_addButtonActionPerformed
 
     private void addButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addButtonMouseEntered
@@ -386,7 +405,7 @@ public class logged_admin extends javax.swing.JFrame {
     }//GEN-LAST:event_removeButtonMouseExited
 
     private void removeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeButtonActionPerformed
-        
+
         int r = table1.getSelectedRow();
         if (r == -1) {
             JOptionPane.showMessageDialog(rootPane, "No row is selected !! Please select a row !!");
@@ -394,9 +413,9 @@ public class logged_admin extends javax.swing.JFrame {
             int check = JOptionPane.showConfirmDialog(rootPane, "Do you want to delete this record ? ");
             if (check == 0 && r != -1) {
                 String tables = drop_down_menu.getSelectedItem().toString();
-                
+
                 String id = (String) table1.getValueAt(r, 0);
-                
+
                 String idColumn = null;
                 String tt = null;
                 switch (tables) {
@@ -438,11 +457,11 @@ public class logged_admin extends javax.swing.JFrame {
                         break;
                 }
                 try {
-                    
+
                     String sql = "DELETE FROM " + tables + " WHERE " + idColumn + "='" + id + "'";
                     pst = conn.prepareStatement(sql);
                     int rowsAffected = pst.executeUpdate();
-                    
+
                     if (rowsAffected > 0) {
                         JOptionPane.showMessageDialog(rootPane, "Record Deleted !!");
                         tableload(tt);
@@ -452,16 +471,16 @@ public class logged_admin extends javax.swing.JFrame {
                 } catch (SQLException e) {
                     JOptionPane.showMessageDialog(null, e);
                 }
-                
+
             }
         }
-        
+
 
     }//GEN-LAST:event_removeButtonActionPerformed
 
     private void close1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_close1ActionPerformed
         this.dispose();
-        
+
     }//GEN-LAST:event_close1ActionPerformed
 
     private void close1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_close1MouseEntered
@@ -521,12 +540,12 @@ public class logged_admin extends javax.swing.JFrame {
             }
         });
     }
-    
-    public String getSelectedValue (){
+
+    public String getSelectedValue() {
         return (String) drop_down_menu.getSelectedItem();
     }
-    
-    public JComboBox getDrop_down_menu(){
+
+    public JComboBox getDrop_down_menu() {
         return drop_down_menu;
     }
 
