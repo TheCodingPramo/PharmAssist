@@ -3,7 +3,6 @@
 <Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
-    <Property name="undecorated" type="boolean" value="true"/>
     <Property name="resizable" type="boolean" value="false"/>
   </Properties>
   <SyntheticProperties>
@@ -118,7 +117,7 @@
         <Component class="frames.Combobox" name="drop_down_menu">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="10">
+              <StringArray count="8">
                 <StringItem index="0" value="Select Table"/>
                 <StringItem index="1" value="Drug"/>
                 <StringItem index="2" value="Generic"/>
@@ -127,8 +126,6 @@
                 <StringItem index="5" value="Supplier"/>
                 <StringItem index="6" value="Supply_Details"/>
                 <StringItem index="7" value="Bill"/>
-                <StringItem index="8" value="Drug_Order"/>
-                <StringItem index="9" value="Pres_Order"/>
               </StringArray>
             </Property>
           </Properties>
